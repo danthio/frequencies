@@ -1,6 +1,6 @@
 INTRODUCTION
 
-The program utilizes the function y=sin(2*Pi*ft)
+The program utilizes the function y=sin(2Pift)
 
 
 USAGE
