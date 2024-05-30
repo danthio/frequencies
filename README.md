@@ -6,6 +6,7 @@ t=time
 
 
 USAGE
+
 Key in the frequency you want.
 
 Use backspace to modify the frequency accordingly. Use Up and Down arrow keys to change the amplitude. Use the Left and Right keys to change the wavelength 
