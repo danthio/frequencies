@@ -1,8 +1,6 @@
 INTRODUCTION
 
 The program utilizes the function y=sin(2*Pi*ft)
-f=frequency
-t=time
 
 
 USAGE
