@@ -625,7 +625,7 @@ p=0
 
 state="sine"
 
-speed=10
+speed=1
 
 amp=[]
 
