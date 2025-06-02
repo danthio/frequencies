@@ -1,11 +1,12 @@
 import tkinter as tk
 import math
-
+tm=[]
 def main():
 	global frequency,time,phase,zoom
 	global can
 	global wd,ht
 	global pause
+	global tm
 
 	if pause==0:
 
@@ -17,25 +18,38 @@ def main():
 
 
 
+
+
+			tm.append(time)
+
+			if len(tm)>750:
+				tm.pop(0)
+
+			#print(tm)
+
 			ar=[]
 
-			for r in range(750):
+			c=-1
 
-				x=r*zoom*math.sin(math.radians((2*math.pi*int(frequency)*time)+phase))+wd/2
-				y=r*zoom*math.cos(math.radians((2*math.pi*int(frequency)*time)+phase))+ht/2
+			for r in range(len(tm)):
 
-				if r*zoom>750:
-					break
+				x=r*zoom*math.sin(math.radians((2*math.pi*int(frequency)*tm[c])+phase))+wd/2
+				y=r*zoom*math.cos(math.radians((2*math.pi*int(frequency)*tm[c])+phase))+ht/2
 
 				ar.append(x)
 				ar.append(y)
 
-				time+=1
+				c-=1
+
+			
+
+			time+=1
 
 
-
-			can.create_line(ar,fill="#32fca7")
-
+			try:
+				can.create_line(ar,fill="#32fca7")
+			except:
+				pass
 
 			phase+=1
 		except:
@@ -52,16 +66,20 @@ def main():
 			ff=format_e(int(frequency))
 
 
-		can.create_text(20,ht-20,text="Frequency  ",fill="#ffffff",font=("FreeMono",13),anchor="w")
-		can.create_text(120-10,ht-20,text=str(ff),fill="gold",font=("FreeMono",13),anchor="w")
+		#can.create_rectangle(0,0, wd,30,fill="#000000")
 
-		can.create_text(wd-20,ht-20,text="x "+str(zoom),fill="gold",font=("FreeMono",13),anchor="e")
+
+		can.create_text(20,15,text="Frequency  ",fill="#ffff00",font=("FreeMono",13),anchor="w")
+		can.create_text(120-10,15,text=str(ff),fill="#ffff00",font=("FreeMono",13),anchor="w")
+
+		can.create_text(wd-20,15,text="x "+str(zoom),fill="#ffff00",font=("FreeMono",13),anchor="e")
 
 	root.after(10,main)
 
 
 def can_e(e):
 	global frequency,time,phase,zoom
+	global tm
 
 	ava="0123456789"
 
@@ -75,10 +93,12 @@ def can_e(e):
 		time=0
 		phase=0	
 		zoom=1
+		tm=[]
 
 def bs(e):
 
 	global frequency,time,phase,zoom
+	global tm
 
 	frequency=frequency[:-1]
 
@@ -88,20 +108,25 @@ def bs(e):
 	time=0
 	phase=0	
 	zoom=1
+	tm=[]
 
 def zoomin(e):
 	global zoom
+	global tm
 
 	zoom+=1
+	tm=[]
 
 
 
 def zoomout(e):
-	global zoom
+	global zoom,tm
 
 	zoom-=1
 	if zoom<1:
 		zoom=1
+
+	tm=[]
 
 def dn(e):
 	pass
@@ -125,12 +150,12 @@ pause=0
 root=tk.Tk()
 
 
-wd=root.winfo_screenwidth()-10
-ht=root.winfo_screenheight()-65
+wd=root.winfo_screenwidth()#-10
+ht=root.winfo_screenheight()#-65
 
 root.geometry(str(wd)+"x"+str(ht)+"+0+0")
-#root.wm_attributes("-fullscreen",1)
-
+root.wm_attributes("-fullscreen",1)
+root.wm_attributes("-transparentcolor","#333333")
 root.title("frequency generator circular")
 
 
